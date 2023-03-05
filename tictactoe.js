@@ -1,7 +1,10 @@
 const ROW = 3;
 const MID = 4;
-const GRID = 9;
 
+/**
+ * start - 
+ * @details - creates the player variable and calls the introduction to the game
+ */
 function start() {
     let player = {
         name: "",
@@ -19,6 +22,13 @@ function start() {
 
     game(player);
 }
+
+/**
+ * intro -
+ * @details - Creates the introductory message, performs coin flip and decides the symbol for each player
+ * @param {*} player - tracks players record, turn order, and token used
+ * @returns - player variable with decided token
+ */
 function intro(player) {
     const prompt = require("prompt-sync")();
 
@@ -49,6 +59,12 @@ function intro(player) {
     return player;
 }
 
+/**
+ * coinToss -
+ * @details - Allows user to call for coin toss, then decides who goes first
+ * @param {*} player - tracks players record, turn order, and token used
+ * @returns - turn order
+ */
 function coinToss(player) {
     const prompt = require("prompt-sync")();
     const input = prompt(`${player.name}, heads or tails? `);
@@ -72,6 +88,11 @@ function coinToss(player) {
     return player;
 }
 
+/**
+ * game -
+ * @details - handles after game is completed, tallies record
+ * @param {*} player - tracks players record, turn order, and token used
+ */
 function game(player) {
     let board = [1, 1, 1, 1, 1, 1, 1, 1, 1];
     board = board.fill(" ");
@@ -103,6 +124,14 @@ function game(player) {
     }
 }
 
+/**
+ * playGame -
+ * @details - Primary functionality for playing the game, gives turn number, and end game message
+ * @param {*} board - board the game is being played on
+ * @param {*} player - tracks players record, turn order, and token used
+ * @param {*} turn - current turn
+ * @returns - outcome of the game
+ */
 function playGame(board, player, turn) {
     
     if (!player.first && turn == 1) {
@@ -149,11 +178,17 @@ function playGame(board, player, turn) {
     }
 }
 
+/**
+ * gameEnd -
+ * @details - checks whether the current game state resulted in the game ending
+ * @param {*} board - current state of the board
+ * @returns - board if the game has been completed, nothing if it is continuing
+ */
 function gameEnd(board) {
     for (let i = 0; i < ROW; ++i) {
         if (board[0 + ROW * i] == board[1 + ROW * i] && board[0 + ROW * i] == board[2 + ROW * i]) {
             if (board[0 + ROW * i] != " " && board[2 + ROW * i] != " ") {
-                return board[0 + ROW * i]
+                return board[0 + ROW * i];
             }
         }
         if (board[i] == board[i + ROW] && board[i] == board[i + (ROW * 2)]) {
@@ -179,6 +214,11 @@ function gameEnd(board) {
     return "";
 }
 
+/**
+ * printBoard -
+ * @details - prints the current state of the board in the correct format
+ * @param {*} arr - contains each token at the board location
+ */
 function printBoard(arr) {
     let temp = "   "
     for (let i = 0; i < arr.length; ++i) {
